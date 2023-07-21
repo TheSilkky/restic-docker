@@ -12,9 +12,6 @@ on:
       - main
   workflow_dispatch:
 
-env:
-  restic_version: "master"
-
 jobs:
   restic:
     runs-on: ubuntu-latest
@@ -37,7 +34,6 @@ jobs:
             type=ref,event=pr
             type=sha
             type=sha,format=long
-#            type=semver,pattern={{version}},value=v${{ env.restic_version }}
           flavor: |
             latest=true
 
@@ -78,7 +74,6 @@ jobs:
         uses: docker/build-push-action@v4
         with:
           context: .
-          build-args: RESTIC_VERSION=${{ env.restic_version }}
           platforms: linux/amd64,linux/arm64
           push: ${{ github.event_name != 'pull_request' }}
           tags: ${{ steps.meta.outputs.tags }}

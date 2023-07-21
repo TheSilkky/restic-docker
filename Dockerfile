@@ -2,14 +2,12 @@
 
 ARG GO_VERSION=1.20.6
 ARG ALPINE_VERSION=3.18
-ARG RESTIC_VERSION
 
 ####################################################################################################
 ## Builder
 ####################################################################################################
 FROM --platform=${BUILDPLATFORM} golang:${GO_VERSION}-alpine${ALPINE_VERSION} AS builder
 
-ARG RESTIC_VERSION
 ARG TARGETOS
 ARG TARGETARCH
 
@@ -19,7 +17,7 @@ RUN apk add --no-cache \
     ca-certificates \
     git
 
-ADD --keep-git-dir=true https://github.com/restic/restic.git#${RESTIC_VERSION} /restic
+ADD --keep-git-dir=true https://github.com/restic/restic.git /restic
 
 WORKDIR /restic
 
