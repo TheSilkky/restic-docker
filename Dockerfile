@@ -19,7 +19,7 @@ RUN apk add --no-cache \
     ca-certificates \
     git
 
-ADD --keep-git-dir=true https://github.com/restic/restic.git#v${RESTIC_VERSION} /restic
+ADD --keep-git-dir=true https://github.com/restic/restic.git#${RESTIC_VERSION} /restic
 
 WORKDIR /restic
 
