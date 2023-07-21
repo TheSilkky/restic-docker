@@ -37,7 +37,7 @@ jobs:
             type=ref,event=pr
             type=sha
             type=sha,format=long
-            type=semver,pattern={{version}},value=v${{ env.restic_version }}
+#            type=semver,pattern={{version}},value=v${{ env.restic_version }}
           flavor: |
             latest=true
 
