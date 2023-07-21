@@ -9,6 +9,7 @@ ARG RESTIC_VERSION
 ####################################################################################################
 FROM --platform=${BUILDPLATFORM} golang:${GO_VERSION}-alpine${ALPINE_VERSION} AS builder
 
+ARG RESTIC_VERSION
 ARG TARGETOS
 ARG TARGETARCH
 
