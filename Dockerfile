@@ -2,6 +2,7 @@
 
 ARG GO_VERSION=1.20.6
 ARG ALPINE_VERSION=3.18
+ARG RESTIC_VERSION
 
 ####################################################################################################
 ## Builder
@@ -10,6 +11,7 @@ FROM --platform=${BUILDPLATFORM} golang:${GO_VERSION}-alpine${ALPINE_VERSION} AS
 
 ARG TARGETOS
 ARG TARGETARCH
+ARG RESTIC_VERSION
 
 ENV CGO_ENABLE=0
 
@@ -17,7 +19,7 @@ RUN apk add --no-cache \
     ca-certificates \
     git
 
-ADD --keep-git-dir=true https://github.com/restic/restic.git /restic
+ADD --keep-git-dir=true https://github.com/restic/restic.git#v${RESTIC_VERSION} /restic
 
 WORKDIR /restic
 
@@ -35,11 +37,11 @@ RUN apk add --no-cache \
     bash
 
 COPY --from=builder --chmod=755 /output/restic /usr/local/bin
-COPY --chmod=755 entrypoint.sh /
+COPY --chmod=755 entrypoint.sh backup.sh /
 
 ENTRYPOINT ["/entrypoint.sh"]
 
-CMD ["restic", "--help"]
+CMD ["/backup.sh"]
 
 LABEL org.opencontainers.image.source="https://github.com/restic/restic.git"
 LABEL org.opencontainers.image.licenses="BSD-2-Clause"
