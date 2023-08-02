@@ -5,7 +5,7 @@ start=$(date +%s)
 echo "Starting backup: ${RESTIC_BACKUP_SOURCE} to ${RESTIC_REPOSITORY} $(date +"%Y-%m-%d %H:%M:%S")"
 
 set +e
-restic backup ${RESTIC_BACKUP_ARGS} "${RESTIC_BACKUP_SOURCE}"
+restic backup ${RESTIC_BACKUP_ARGS:-""} "${RESTIC_BACKUP_SOURCE}"
 backupRC=$?
 set -e
 
